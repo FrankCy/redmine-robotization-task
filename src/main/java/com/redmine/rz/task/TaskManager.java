@@ -5,6 +5,8 @@ import com.taskadapter.redmineapi.RedmineManager;
 import com.taskadapter.redmineapi.RedmineManagerFactory;
 import com.taskadapter.redmineapi.bean.Issue;
 import com.taskadapter.redmineapi.bean.IssueFactory;
+import com.taskadapter.redmineapi.bean.Tracker;
+import com.taskadapter.redmineapi.bean.TrackerFactory;
 
 import java.util.List;
 
@@ -43,18 +45,20 @@ public class TaskManager {
             System.out.println(issue.toString());
         }
 
-        //循环创建
-        for(int i=10; i<30; i++) {
-            Issue issue = new Issue();
-            issue.setProjectId(i+1);
-            issue.setDescription("描述信息：" + i);
-            issue.setSubject("错误");
-            Issue createdIssue = issueManager.createIssue(issue);
+        //设置跟踪 1：问题；2：功能
+        Tracker tracker = TrackerFactory.create(2);
+        for(int i=1; i<10; i++) {
+            Issue issueToCreate = IssueFactory.create(1, "some subject");
+            issueToCreate.setStatusId(5);
+            issueToCreate.setTracker(tracker);
+            issueToCreate.setAuthorId(1);
+            issueToCreate.setAssigneeId(9);
+            issueManager.createIssue(issueToCreate);
         }
 
         //通过ID获取问题（这里获取ID=11的问题）
-        Issue issue = issueManager.getIssueById(11);
-        System.out.println(issue.getDescription());
+//        Issue issue = issueManager.getIssueById(11);
+//        System.out.println(issue.getDescription());
     }
 
 }
