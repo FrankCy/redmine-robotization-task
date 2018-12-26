@@ -42,9 +42,6 @@ public class RedmineIssueManager {
      */
     public static boolean createIssueBug(String proName, String title, String description) throws Exception {
 
-        // 目标项目
-        String projectKey = validateProName(proName);
-
         // Redmine管理器
         RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
 
@@ -75,9 +72,6 @@ public class RedmineIssueManager {
      * @mofified By:
      */
     public static boolean createIssueThings(String proName, String title, String description) throws Exception {
-
-        // 目标项目
-        String projectKey = validateProName(proName);
 
         // Redmine管理器
         RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
