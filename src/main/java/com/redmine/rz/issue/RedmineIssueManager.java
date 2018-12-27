@@ -51,13 +51,13 @@ public class RedmineIssueManager {
         // 设置跟踪 1：问题；2：功能
         Tracker tracker = TrackerFactory.create(1);
 
-        Issue issueToCreate = IssueFactory.create(1, isEmpty(title));
-        issueToCreate.setStatusId(1);
-        issueToCreate.setTracker(tracker);
-        issueToCreate.setAuthorId(1);
-        issueToCreate.setAssigneeId(9);
-        issueToCreate.setDescription(isEmpty(description));
-        issueManager.createIssue(issueToCreate);
+        Issue issueToCreate = IssueFactory.create(1, isEmpty(title)); //创建任务，并赋标题
+        issueToCreate.setStatusId(1); //设置状态新建
+        issueToCreate.setTracker(tracker); //设置跟踪
+        issueToCreate.setAuthorId(1); //设置发起人
+        issueToCreate.setAssigneeId(9); //设置指派人
+        issueToCreate.setDescription(isEmpty(description)); //设置问题描述
+        issueManager.createIssue(issueToCreate); //创建任务
 
         return true;
     }
