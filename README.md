@@ -1,7 +1,7 @@
 # Redmine Rest API —— JAVA #
 
 ## 简介 ##
-通过Java调用Redmine Rest API进行创建功能或BUG
+通过Java调用Redmine Rest API进行创建Demand或Bug
 
 ## 应用场景 ##
 1. 规定Java可读取格式，解析需求功能清单，自动创建功能列表；
