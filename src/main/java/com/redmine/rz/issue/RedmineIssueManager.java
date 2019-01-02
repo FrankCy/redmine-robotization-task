@@ -235,9 +235,8 @@ public class RedmineIssueManager {
     }
 
     public static void main(String[] args) throws Exception {
-        RedmineIssueManager.deleteIssues();
+//        RedmineIssueManager.deleteIssues();
 
-        /*
         IssueBean issueBean = RedmineIssueManager.initIssueBean("first_pro", "[V3.3.1-D]创建用户", "1.创建用户表\n 2.新增创建用户表单\n 3.完成用户创建功能");
         IssueBean issueBean1 = RedmineIssueManager.initIssueBean("first_pro", "[V3.3.1-D]删除用户", "1.删除用户信息，用户信息状态标记已删除，数据留存");
         IssueBean issueBean2 = RedmineIssueManager.initIssueBean("first_pro", "[V3.3.1-D]修改用户", "1.修改表单\n 2.修改功能\n 3.并新增修改记录");
@@ -259,6 +258,5 @@ public class RedmineIssueManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        */
     }
 }
