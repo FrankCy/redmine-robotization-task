@@ -12,6 +12,9 @@
                 <div class="banner-content col-lg-8 col-md-12">
                     <h1 class="wow fadeIn" data-wow-duration="4s">百达金融 <br> Redmine 任务管理平台</h1>
                     <h1>上传成功`(@_@)`</h1>
+                    <p class="text-white">
+                        <a href="http://192.168.10.110:3000/projects/">点击此处，打开您的redmine。</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -19,10 +22,7 @@
     <!-- End Banner Area -->
 
     <script src="../js/vendor/jquery-2.2.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
     <script src="../js/vendor/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
     <script src="../js/easing.min.js"></script>
     <script src="../js/hoverIntent.js"></script>
     <script src="../js/superfish.min.js"></script>

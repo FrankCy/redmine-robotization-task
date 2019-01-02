@@ -10,7 +10,7 @@
         <div class="container">
             <div class="row fullscreen d-flex align-items-center justify-content-center">
                 <div class="banner-content col-lg-8 col-md-12">
-                    <h1 class="wow fadeIn" data-wow-duration="4s">百达金融信息服务 <br> Redmine 任务管理平台</h1>
+                    <h1 class="wow fadeIn" data-wow-duration="4s">百达金融 <br> Redmine 任务管理平台</h1>
                     <p class="text-white">
                         请上传任务清单，系统会为您自动创建任务.
                     </p>

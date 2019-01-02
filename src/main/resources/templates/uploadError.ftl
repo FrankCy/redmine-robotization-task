@@ -10,7 +10,7 @@
         <div class="container">
             <div class="row fullscreen d-flex align-items-center justify-content-center">
                 <div class="banner-content col-lg-8 col-md-12">
-                    <h1 class="wow fadeIn" data-wow-duration="4s">百达金融信息服务 <br> Redmine 任务管理平台</h1>
+                    <h1 class="wow fadeIn" data-wow-duration="4s">百达金融 <br> Redmine 任务管理平台</h1>
                     <h1>发生了一些有趣的问题，很抱歉，上传失败。（- _-!!)</h1>
                 </div>
             </div>
@@ -19,10 +19,7 @@
     <!-- End Banner Area -->
 
     <script src="../js/vendor/jquery-2.2.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
     <script src="../js/vendor/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
     <script src="../js/easing.min.js"></script>
     <script src="../js/hoverIntent.js"></script>
     <script src="../js/superfish.min.js"></script>
