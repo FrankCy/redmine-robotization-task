@@ -9,7 +9,6 @@ import com.taskadapter.redmineapi.bean.IssueFactory;
 import com.taskadapter.redmineapi.bean.Tracker;
 import com.taskadapter.redmineapi.bean.TrackerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -80,7 +79,7 @@ public class RedmineIssueManager {
      * @date: 2018/12/24 上午9:55
      * @mofified By:
      */
-    public boolean createIssueThings(String title, String description) throws Exception {
+    public boolean createIssueThings(IssueBean issueBean) throws Exception {
 
         // Redmine管理器
         RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
@@ -91,14 +90,25 @@ public class RedmineIssueManager {
         // 设置跟踪 1：问题；2：功能
         Tracker tracker = TrackerFactory.create(2);
 
-        Issue issueToCreate = IssueFactory.create(1, isEmpty(title));
+        Issue issueToCreate = IssueFactory.create(1, isEmpty(issueBean.getTitle()));
+        // 状态
         issueToCreate.setStatusId(1);
+        // 跟踪类型
         issueToCreate.setTracker(tracker);
+        // 任务创建人
         issueToCreate.setAuthorId(1);
+        // 任务被指派人
         issueToCreate.setAssigneeId(9);
-        issueToCreate.setDescription(description);
+        // 描述
+        issueToCreate.setDescription(issueBean.getDescription());
         // 默认插入到项目标号为1的项目中
         issueToCreate.setProjectId(1);
+        // 到期日期（Date）
+        issueToCreate.setDueDate(issueBean.getDueDate());
+        // 预估时间（Float）
+        issueToCreate.setEstimatedHours(issueBean.getEstimatedHours());
+        // 耗时（Float）
+        issueToCreate.setSpentHours(issueBean.getSpentHours());
         issueManager.createIssue(issueToCreate);
 
         return true;
@@ -226,7 +236,7 @@ public class RedmineIssueManager {
     public static IssueBean initIssueBean(String proName, String title, String description) {
         IssueBean issueBean = new IssueBean();
         //项目名称
-        issueBean.setProName(proName);
+        issueBean.setProId(1);
         //demand创建需求（标题）
         issueBean.setTitle(title);
         //描述信息
@@ -237,26 +247,26 @@ public class RedmineIssueManager {
     public static void main(String[] args) throws Exception {
 //        RedmineIssueManager.deleteIssues();
 
-        IssueBean issueBean = RedmineIssueManager.initIssueBean("first_pro", "[V3.3.1-D]创建用户", "1.创建用户表\n 2.新增创建用户表单\n 3.完成用户创建功能");
-        IssueBean issueBean1 = RedmineIssueManager.initIssueBean("first_pro", "[V3.3.1-D]删除用户", "1.删除用户信息，用户信息状态标记已删除，数据留存");
-        IssueBean issueBean2 = RedmineIssueManager.initIssueBean("first_pro", "[V3.3.1-D]修改用户", "1.修改表单\n 2.修改功能\n 3.并新增修改记录");
-        IssueBean issueBean3 = RedmineIssueManager.initIssueBean("first_pro", "[V3.3.1-D]查询用户", "1.查询用户表单\n 2.多条件查询（用户名、性别、年龄、部门、所属类型）\n 3.支持分页（规则以标准功能需求为准）");
-
-        List<IssueBean> list = new ArrayList<>();
-        list.add(issueBean);
-        list.add(issueBean1);
-        list.add(issueBean2);
-        list.add(issueBean3);
-
-        try {
-            RedmineIssueManager redmineIssueManager = new RedmineIssueManager();
-            for(IssueBean ib : list) {
-                boolean uploadFlag = redmineIssueManager.createIssueThings( ib.getTitle(), ib.getDescription());
-                System.out.println(uploadFlag);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        IssueBean issueBean = RedmineIssueManager.initIssueBean("first_pro", "[V3.3.1-D]创建用户", "1.创建用户表\n 2.新增创建用户表单\n 3.完成用户创建功能");
+//        IssueBean issueBean1 = RedmineIssueManager.initIssueBean("first_pro", "[V3.3.1-D]删除用户", "1.删除用户信息，用户信息状态标记已删除，数据留存");
+//        IssueBean issueBean2 = RedmineIssueManager.initIssueBean("first_pro", "[V3.3.1-D]修改用户", "1.修改表单\n 2.修改功能\n 3.并新增修改记录");
+//        IssueBean issueBean3 = RedmineIssueManager.initIssueBean("first_pro", "[V3.3.1-D]查询用户", "1.查询用户表单\n 2.多条件查询（用户名、性别、年龄、部门、所属类型）\n 3.支持分页（规则以标准功能需求为准）");
+//
+//        List<IssueBean> list = new ArrayList<>();
+//        list.add(issueBean);
+//        list.add(issueBean1);
+//        list.add(issueBean2);
+//        list.add(issueBean3);
+//
+//        try {
+//            RedmineIssueManager redmineIssueManager = new RedmineIssueManager();
+//            for(IssueBean ib : list) {
+//                boolean uploadFlag = redmineIssueManager.createIssueThings( ib.getTitle(), ib.getDescription());
+//                System.out.println(uploadFlag);
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 }
