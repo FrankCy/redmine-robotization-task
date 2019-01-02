@@ -2,14 +2,18 @@ package com.redmine.rz.issue;
 
 import com.redmine.rz.bean.IssueBean;
 import com.taskadapter.redmineapi.IssueManager;
+import com.taskadapter.redmineapi.Params;
 import com.taskadapter.redmineapi.RedmineManager;
 import com.taskadapter.redmineapi.RedmineManagerFactory;
 import com.taskadapter.redmineapi.bean.Issue;
 import com.taskadapter.redmineapi.bean.IssueFactory;
 import com.taskadapter.redmineapi.bean.Tracker;
 import com.taskadapter.redmineapi.bean.TrackerFactory;
+import com.taskadapter.redmineapi.internal.ResultsWrapper;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @version 1.0
@@ -169,6 +173,35 @@ public class RedmineIssueManager {
 
     }
 
+    /**
+     * @description：查询某项目下指定问题（根据问题标题）
+     * @version 1.0
+     * @author: Yang.Chang
+     * @email: cy880708@163.com
+     * @date: 2018/12/24 上午9:55
+     * @mofified By:
+     */
+    public Boolean getIssueTitle(String issueTitile, int assigneeId) throws Exception {
+
+        // 声明Redmine管理器
+        RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
+
+        // 获取问题管理对象
+        IssueManager issueManager = mgr.getIssueManager();
+
+        // 根据ID获取问题
+        Params parameters = new Params();
+        parameters.add("title", issueTitile);
+        parameters.add("assigneeId", String.valueOf(assigneeId));
+
+        ResultsWrapper<Issue> issueResultsWrapper = issueManager.getIssues(parameters);
+
+        if(issueResultsWrapper.hasSomeResults()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     /**
      * @description：校验项目是否存在，给缺省

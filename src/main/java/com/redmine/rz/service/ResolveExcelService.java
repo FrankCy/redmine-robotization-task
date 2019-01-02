@@ -16,5 +16,16 @@ import java.util.List;
  * @mofified By:
  */
 public interface ResolveExcelService {
+
+    /**
+     * @exception Exception 错误
+     * @param file 上传文件
+     * @description：
+     * @version 1.0
+     * @author: Yang.Chang
+     * @email: cy880708@163.com
+     * @date: 2019/1/2 下午5:23
+     * @mofified By:
+     */
     List<IssueBean> initRedmineInfo(MultipartFile file) throws Exception;
 }

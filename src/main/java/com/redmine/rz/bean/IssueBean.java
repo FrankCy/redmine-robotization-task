@@ -14,25 +14,39 @@ import java.util.Date;
  */
 public class IssueBean {
 
-    //项目主键
+    /**
+     * 项目主键
+     */
     private int proId;
 
-    //任务标题
+    /**
+     * 任务标题
+     */
     private String title;
 
-    //任务被指派人
+    /**
+     * 任务被指派人
+     */
     private int assigneeId;
 
-    //任务描述
+    /**
+     * 任务描述
+     */
     private String description;
 
-    //到期日期
+    /**
+     * 到期日期
+     */
     private Date dueDate;
 
-    //预估时间（工时）
+    /**
+     * 预估时间（工时）
+     */
     private Float estimatedHours;
 
-    //实际耗时
+    /**
+     * 实际耗时
+     */
     private Float spentHours;
 
     public int getProId() {

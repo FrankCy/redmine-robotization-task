@@ -26,7 +26,7 @@ public class BdjrDateUtil {
      * @date: 2019/1/2 下午4:35
      * @mofified By:
      */
-    public static Date StringDateToDate(String dateString) throws ParseException {
+    public static Date stringDateToDate(String dateString) throws ParseException {
 
         //定义转换格式
         SimpleDateFormat formatter = new SimpleDateFormat(timePattern);

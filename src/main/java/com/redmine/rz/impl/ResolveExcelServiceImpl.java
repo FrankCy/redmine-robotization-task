@@ -6,14 +6,15 @@ import com.redmine.rz.util.BdjrDateUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.thymeleaf.util.DateUtils;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -75,41 +76,35 @@ public class ResolveExcelServiceImpl implements ResolveExcelService {
                 //从第一行开始第一行一般是标题
                 for (int j = 1; j <= lastRowNum; j++) {
                     Row row = sheet.getRow(j);
-                    logger.info("row ------- " + row.toString());
                     IssueBean issueBean = new IssueBean();
                     //标题
                     if (row.getCell(0) != null) {
                         row.getCell(0).setCellType(Cell.CELL_TYPE_STRING);
                         String title = row.getCell(0).getStringCellValue();
-                        logger.info("title ------- " + title);
                         issueBean.setTitle(title);
                     }
                     //描述
                     if (row.getCell(1) != null) {
                         row.getCell(1).setCellType(Cell.CELL_TYPE_STRING);
                         String description = row.getCell(1).getStringCellValue();
-                        logger.info("description ------- " + description);
                         issueBean.setDescription(description);
                     }
                     //指派给谁
                     if (row.getCell(2) != null) {
                         row.getCell(2).setCellType(Cell.CELL_TYPE_NUMERIC);
                         Double assigneeId = row.getCell(2).getNumericCellValue();
-                        logger.info("assigneeId ------- " + assigneeId);
                         issueBean.setAssigneeId(assigneeId.intValue());
                     }
                     //截止时间
                     if (row.getCell(3) != null) {
                         row.getCell(3).setCellType(Cell.CELL_TYPE_STRING);
                         String dueDateString = row.getCell(3).getStringCellValue();
-                        logger.info("dueDate ------- " + dueDateString);
-                        issueBean.setDueDate(BdjrDateUtil.StringDateToDate(dueDateString));
+                        issueBean.setDueDate(BdjrDateUtil.stringDateToDate(dueDateString));
                     }
                     //预估完成时间（小时）
                     if (row.getCell(4) != null) {
                         row.getCell(4).setCellType(Cell.CELL_TYPE_STRING);
                         String estimatedHours = row.getCell(4).getStringCellValue();
-                        logger.info("estimatedHours ------- " + estimatedHours);
                         issueBean.setEstimatedHours(Float.valueOf(estimatedHours));
                     }
                     list.add(issueBean);

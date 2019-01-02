@@ -17,11 +17,12 @@ import java.util.List;
 public interface RedmineService {
 
     /**
-     * @description：批量创建任务
+     * @param issueBeanList 任务集合
+     * @description：
      * @version 1.0
      * @author: Yang.Chang
      * @email: cy880708@163.com
-     * @date: 2019/1/2 下午4:37
+     * @date: 2019/1/2 下午5:23
      * @mofified By:
      */
     boolean createIssues(List<IssueBean> issueBeanList);
