@@ -10,8 +10,8 @@
         <div class="container">
             <div class="row fullscreen d-flex align-items-center justify-content-center">
                 <div class="banner-content col-lg-8 col-md-12">
-                    <h1 class="wow fadeIn" data-wow-duration="4s">百达金融 <br> Redmine 任务管理平台</h1>
-                    <h1>上传成功`(@_@)`</h1>
+                    <h1 class="wow fadeIn" data-wow-duration="4s">百达金融信息服务 <br> Redmine 任务管理平台</h1>
+                    <h1>发生了一些有趣的问题，很抱歉，上传失败。（- _-!!)</h1>
                 </div>
             </div>
         </div>
