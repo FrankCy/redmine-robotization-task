@@ -8,7 +8,6 @@ import com.redmine.rz.service.RedmineService;
 import com.redmine.rz.service.ResolveExcelService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.poi.util.StringUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
