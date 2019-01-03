@@ -1,6 +1,7 @@
 package com.redmine.rz.service;
 
 import com.redmine.rz.bean.IssueBean;
+import com.redmine.rz.bean.ServiceResult;
 
 import java.util.List;
 
@@ -25,6 +26,6 @@ public interface RedmineService {
      * @date: 2019/1/2 下午5:23
      * @mofified By:
      */
-    boolean createIssues(List<IssueBean> issueBeanList);
+    ServiceResult createIssues(List<IssueBean> issueBeanList);
 
 }

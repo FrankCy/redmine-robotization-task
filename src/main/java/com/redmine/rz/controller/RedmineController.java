@@ -1,15 +1,19 @@
 package com.redmine.rz.controller;
 
 import com.redmine.rz.bean.IssueBean;
+import com.redmine.rz.bean.ServiceResult;
 import com.redmine.rz.service.RedmineService;
 import com.redmine.rz.service.ResolveExcelService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.poi.util.StringUtil;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -61,19 +65,25 @@ public class RedmineController {
      * @mofified By:
      */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public String uploadExcel(@RequestParam("file") MultipartFile uploadFile) {
-
+    public ModelAndView uploadExcel(@RequestParam("file") MultipartFile uploadFile) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("uploadError");
         try {
             List<IssueBean> issueBeans = resolveExcelService.initRedmineInfo(uploadFile);
-            if(redmineService.createIssues(issueBeans)) {
-                return "uploadSuccess";
+            ServiceResult result = redmineService.createIssues(issueBeans);
+            String resCode = result.getResCode();
+            if(!StringUtils.isEmpty(resCode) && "200".equals(resCode)) {
+                //判断是否有重复的
+                modelAndView.addObject("dIsList", result.getResList());
+                modelAndView.setViewName("uploadSuccess");
+                return modelAndView;
             } else {
-                return "uploadError";
+                return modelAndView;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "uploadError";
+        return modelAndView;
     }
 
 }

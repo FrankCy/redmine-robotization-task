@@ -6,7 +6,7 @@
     <body>
 
     <!-- Start Banner Area -->
-    <section class="home-banner-area relative">
+    <section class="home-banner-area relative" style="background: url(../img/header-bg.png) no-repeat top center;background-size: cover;">
         <div class="container">
             <div class="row fullscreen d-flex align-items-center justify-content-center">
                 <div class="banner-content col-lg-8 col-md-12">

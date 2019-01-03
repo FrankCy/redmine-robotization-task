@@ -17,25 +17,20 @@
 
                     <div class="input-wrap">
                         <form method="POST" enctype="multipart/form-data" action="/redmine/upload" class="form-box d-flex justify-content-between">
-                            <input type="file" placeholder="选择文件" class="form-control" name="file">
+                            <input type="file" placeholder="选择文件" class="custom-file" name="file">
                             <button type="submit" class="btn search-btn">上传</button>
                         </form>
                     </div>
-                    <h4 class="text-white">Top courses</h4>
+                    <h4 class="text-white">团队成员</h4>
 
                     <div class="courses pt-20">
-                        <a href="#" data-wow-duration="1s" data-wow-delay=".3s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">Ruby
-                            on Rails</a>
-                        <a href="#" data-wow-duration="1s" data-wow-delay=".6s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">Python</a>
-                        <a href="#" data-wow-duration="1s" data-wow-delay=".9s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">Marketing</a>
-                        <a href="#" data-wow-duration="1s" data-wow-delay="1.2s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">UI/UX
-                            Design
-                        </a>
-                        <a href="#" data-wow-duration="1s" data-wow-delay="1.5s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">Android</a>
-                        <a href="#" data-wow-duration="1s" data-wow-delay="1.8s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">Data
-                            Science
-                        </a>
-                        <a href="#" data-wow-duration="1s" data-wow-delay="2.1s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">Cryptocurrency</a>
+                        <a href="#" data-wow-duration="1s" data-wow-delay=".3s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">郝亚强</a>
+                        <a href="#" data-wow-duration="1s" data-wow-delay=".6s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">王凯</a>
+                        <a href="#" data-wow-duration="1s" data-wow-delay=".9s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">郭佩鹏</a>
+                        <a href="#" data-wow-duration="1s" data-wow-delay="1.5s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">杨文迪</a>
+                        <a href="#" data-wow-duration="1s" data-wow-delay="1.2s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">耿宇航</a>
+                        <a href="#" data-wow-duration="1s" data-wow-delay="1.8s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">桑小龙</a>
+                        <a href="#" data-wow-duration="1s" data-wow-delay="2.1s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">高懿</a>
                     </div>
                 </div>
             </div>

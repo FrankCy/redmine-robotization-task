@@ -6,12 +6,24 @@
     <body>
 
     <!-- Start Banner Area -->
-    <section class="home-banner-area relative">
+    <section class="home-banner-area relative" style="background: url(../img/header-bg.png) no-repeat top center;background-size: cover;">
         <div class="container">
             <div class="row fullscreen d-flex align-items-center justify-content-center">
                 <div class="banner-content col-lg-8 col-md-12">
                     <h1 class="wow fadeIn" data-wow-duration="4s">百达金融 <br> Redmine 任务管理平台</h1>
                     <h1>上传成功`(@_@)`</h1>
+                    <#if !dIsList?exists || dIsList?size==0>
+                        <a href="#" class="list-group-item active">
+                            功能清单未出现重复功能
+                        </a>
+                    <#else>
+                        <a href="#" class="list-group-item active">
+                            已存在功能[失败]：
+                        </a>
+                        <#list dIsList as list>
+                            <a href="#" class="list-group-item">${list}</a>
+                        </#list>
+                    </#if>
                     <p class="text-white">
                         <a href="http://192.168.10.110:3000/projects/">点击此处，打开您的redmine。</a>
                     </p>
