@@ -19,7 +19,11 @@
         <script src="../js/jquery.counterup.min.js"></script>
         <script src="../js/mail-script.js"></script>
         <script src="../js/main.js"></script>
-        <script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="https://img.hcharts.cn/highcharts/highcharts.js"></script>
+        <script src="https://img.hcharts.cn/highcharts/modules/exporting.js"></script>
+        <script src="https://img.hcharts.cn/highcharts/modules/oldie.js"></script>
+        <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+        <script src="https://img.hcharts.cn/highcharts/themes/sand-signika.js"></script>
     </header>
     <body>
 
@@ -43,7 +47,7 @@
 
                         <div class="courses pt-20">
                             <#if !userIssueList?exists || userIssueList?size==0>
-                            不可能走到这步
+                                <h2>请检查Redmine是否可用。</h2>
                             <#else>
                                 <#list userIssueList as uiList>
                                 <a href="#" data-wow-duration="1s" data-wow-delay="${uiList_index/10}s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">${uiList.userName} [<#if !uiList.userIssues?exists || uiList.userIssues?size==0>0<#else>${uiList.userIssues?size}</#if>]</a>
@@ -60,20 +64,9 @@
         <section class="about-area section-gap">
             <div class="container">
                 <div class="row align-items-center justify-content-center">
-                    <div class="col-lg-5 col-md-6 about-left">
+                    <div class="col-sm-12 col-md-12">
                         <#--<img class="img-fluid" src="../img/about.jpg" alt="">-->
-                        <div id="container" style="width: 550px; height: 400px; margin: 0 auto"></div>
-                    </div>
-
-                    <div class="offset-lg-1 col-lg-6 offset-md-0 col-md-12 about-right">
-                        <h1>
-                            BDJR-Redmine[Project] <br> 攀枝花存管
-                        </h1>
-                        <div class="wow fadeIn" data-wow-duration="1s">
-                            <p>
-                                项目描述信息巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉项目描述信息巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉项目描述信息巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉项目描述信息巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉项目描述信息巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉.
-                            </p>
-                        </div>
+                        <div id="container" style="width: 1000px; height: 400px; margin: 0 auto"></div>
                     </div>
                 </div>
             </div>
@@ -194,73 +187,75 @@
         <!-- ####################### End Scroll to Top Area ####################### -->
 
         <script type="text/javascript">
-            $(document).ready(function() {
-                var title = {
-                    text: '任务总览'
-                };
-                var subtitle = {
-                    text: 'http://192.168.10.110:3000/'
-                };
-                var xAxis = {
-                    categories: ['一月', '二月', '三月', '四月', '五月', '六月'
-                        ,'七月', '八月', '九月', '十月', '十一月', '十二月']
-                };
-                var yAxis = {
+            var chart = null;
+            $.getJSON('/redmine/getRedmineIssueJson', function (data) {
+                chart = Highcharts.chart('container', {
+                    chart: {
+                        zoomType: 'x'
+                    },
                     title: {
-                        text: '数量'
+                        text: '燃尽图'
                     },
-                    plotLines: [{
-                        value: 0,
-                        width: 1,
-                        color: '#808080'
+                    subtitle: {
+                        text: document.ontouchstart === undefined ?
+                                '鼠标拖动可以进行缩放' : '手势操作进行缩放'
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        dateTimeLabelFormats: {
+                            millisecond: '%H:%M:%S.%L',
+                            second: '%H:%M:%S',
+                            minute: '%H:%M',
+                            hour: '%H:%M',
+                            day: '%m-%d',
+                            week: '%m-%d',
+                            month: '%Y-%m',
+                            year: '%Y'
+                        }
+                    },
+                    tooltip: {
+                        xDateFormat: '%Y-%m-%d'
+                    },
+                    yAxis: {
+                        title: {
+                            text: '数量'
+                        }
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        area: {
+                            fillColor: {
+                                linearGradient: {
+                                    x1: 0,
+                                    y1: 0,
+                                    x2: 0,
+                                    y2: 1
+                                },
+                                stops: [
+                                    [0, Highcharts.getOptions().colors[0]],
+                                    [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                                ]
+                            },
+                            marker: {
+                                radius: 2
+                            },
+                            lineWidth: 1,
+                            states: {
+                                hover: {
+                                    lineWidth: 1
+                                }
+                            },
+                            threshold: null
+                        }
+                    },
+                    series: [{
+                        type: 'area',
+                        name: '剩余任务',
+                        data: data
                     }]
-                };
-
-                var tooltip = {
-                    valueSuffix: '\xB0C'
-                }
-
-                var legend = {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'middle',
-                    borderWidth: 0
-                };
-
-                var series =  [
-                    {
-                        name: '新建',
-                        data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
-                            26.5, 23.3, 18.3, 13.9, 9.6]
-                    },
-                    {
-                        name: '开发中',
-                        data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8,
-                            24.1, 20.1, 14.1, 8.6, 2.5]
-                    },
-                    {
-                        name: '已完成',
-                        data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6,
-                            17.9, 14.3, 9.0, 3.9, 1.0]
-                    },
-                    {
-                        name: 'BUG',
-                        data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0,
-                            16.6, 14.2, 10.3, 6.6, 4.8]
-                    }
-                ];
-
-                var json = {};
-
-                json.title = title;
-                json.subtitle = subtitle;
-                json.xAxis = xAxis;
-                json.yAxis = yAxis;
-                json.tooltip = tooltip;
-                json.legend = legend;
-                json.series = series;
-
-                $('#container').highcharts(json);
+                });
             });
         </script>
     </body>

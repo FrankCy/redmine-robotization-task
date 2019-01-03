@@ -6,12 +6,12 @@ import com.redmine.rz.bean.RedmineUser;
 import com.taskadapter.redmineapi.*;
 import com.taskadapter.redmineapi.bean.*;
 import com.taskadapter.redmineapi.internal.ResultsWrapper;
+import com.xiaoleilu.hutool.date.DateTime;
+import org.json.JSONObject;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @version 1.0
@@ -539,7 +539,7 @@ public class RedmineIssueManager {
 
     public static void main(String[] args) throws Exception {
 //        RedmineIssueManager.deleteIssues();
-        RedmineIssueManager.findIssueByUserId("9");
+//        RedmineIssueManager.findIssueByUserId("9");
 
 //        IssueBean issueBean = RedmineIssueManager.initIssueBean("first_pro", "[V3.3.1-D]创建用户", "1.创建用户表\n 2.新增创建用户表单\n 3.完成用户创建功能");
 //        IssueBean issueBean1 = RedmineIssueManager.initIssueBean("first_pro", "[V3.3.1-D]删除用户", "1.删除用户信息，用户信息状态标记已删除，数据留存");
@@ -562,5 +562,29 @@ public class RedmineIssueManager {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
+
+        //定义起始日期
+        Date d1 = new SimpleDateFormat("yyyyMMdd").parse("20150101");
+        //定义结束日期
+        Date d2 = new SimpleDateFormat("yyyyMMdd").parse("20191231");
+        //定义日期实例
+        Calendar dd = Calendar.getInstance();
+        //设置日期起始时间
+        dd.setTime(d1);
+        //判断是否到结束日期
+        int i=2000;
+        List listTwo = new ArrayList();
+        while(dd.getTime().before(d2)){
+            i = i-1;
+            DateTime dateTime = new DateTime(dd.getTime());
+            //进行当前日期月份加1
+            dd.add(Calendar.DAY_OF_MONTH, 1);
+            List listOne = new ArrayList();
+            listOne.add(dateTime.getTime());
+            System.out.println(dateTime.getTime());
+            listOne.add(i);
+            listTwo.add(listOne);
+        }
+
     }
 }

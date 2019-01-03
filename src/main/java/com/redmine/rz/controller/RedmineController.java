@@ -6,6 +6,7 @@ import com.redmine.rz.bean.ServiceResult;
 import com.redmine.rz.bean.UserIssue;
 import com.redmine.rz.service.RedmineService;
 import com.redmine.rz.service.ResolveExcelService;
+import com.xiaoleilu.hutool.date.DateTime;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -13,10 +14,15 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -101,6 +107,34 @@ public class RedmineController {
             e.printStackTrace();
         }
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/getRedmineIssueJson")
+    @ResponseBody
+    public String getRedmineIssueJson() throws Exception {
+
+        //定义起始日期
+        Date d1 = new SimpleDateFormat("yyyyMMdd").parse("20150101");
+        //定义结束日期
+        Date d2 = new SimpleDateFormat("yyyyMMdd").parse("20191231");
+        //定义日期实例
+        Calendar dd = Calendar.getInstance();
+        //设置日期起始时间
+        dd.setTime(d1);
+        //判断是否到结束日期
+        int i=2000;
+        List listTwo = new ArrayList();
+        while(dd.getTime().before(d2)){
+            i = i-1;
+            DateTime dateTime = new DateTime(dd.getTime());
+            //进行当前日期月份加1
+            dd.add(Calendar.DAY_OF_MONTH, 1);
+            List listOne = new ArrayList();
+            listOne.add(dateTime.getTime());
+            listOne.add(i);
+            listTwo.add(listOne);
+        }
+        return listTwo.toString();
     }
 
 }
