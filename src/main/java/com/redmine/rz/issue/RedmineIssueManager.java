@@ -420,9 +420,12 @@ public class RedmineIssueManager {
 
         // 循环并封装bean
         for(User user : users) {
+            if(user.getId() == 1){
+                continue;
+            }
             RedmineUser redmineUser = new RedmineUser();
             redmineUser.setUserId(user.getId());
-            redmineUser.setUserName(user.getFullName());
+            redmineUser.setUserName(user.getLastName() + user.getFirstName());
             redmineUsers.add(redmineUser);
         }
 
