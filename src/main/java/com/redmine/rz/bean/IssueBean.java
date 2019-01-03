@@ -15,6 +15,11 @@ import java.util.Date;
 public class IssueBean {
 
     /**
+     * 任务主键
+     */
+    private int id;
+
+    /**
      * 项目主键
      */
     private int proId;
@@ -48,6 +53,14 @@ public class IssueBean {
      * 实际耗时
      */
     private Float spentHours;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getProId() {
         return proId;
@@ -108,7 +121,8 @@ public class IssueBean {
     @Override
     public String toString() {
         return "IssueBean{" +
-                "proId=" + proId +
+                "id=" + id +
+                ", proId=" + proId +
                 ", title='" + title + '\'' +
                 ", assigneeId=" + assigneeId +
                 ", description='" + description + '\'' +

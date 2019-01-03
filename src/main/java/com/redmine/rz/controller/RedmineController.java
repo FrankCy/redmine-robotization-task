@@ -1,7 +1,9 @@
 package com.redmine.rz.controller;
 
 import com.redmine.rz.bean.IssueBean;
+import com.redmine.rz.bean.ProjectBean;
 import com.redmine.rz.bean.ServiceResult;
+import com.redmine.rz.bean.UserIssue;
 import com.redmine.rz.service.RedmineService;
 import com.redmine.rz.service.ResolveExcelService;
 import org.apache.commons.logging.Log;
@@ -52,8 +54,24 @@ public class RedmineController {
      * @mofified By:
      */
     @RequestMapping(value = "/index")
-    public String index() {
-        return "index";
+    public ModelAndView index() {
+        //初始化响应模版
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("index");
+
+        //查询平台所有项目
+        List<ProjectBean> projectBeans = redmineService.getRedmineProjects();
+        modelAndView.addObject("projectBeans", projectBeans);
+
+        //查询平台任务总数
+        int issueByProCount = redmineService.getIssuesCountByPro("");
+        modelAndView.addObject("issueByProCount", issueByProCount);
+
+        //查询每个人的任务总数
+        List<UserIssue> userIssueList = redmineService.getUsersIssue();
+        modelAndView.addObject("userIssueList", userIssueList);
+
+        return modelAndView;
     }
 
     /**

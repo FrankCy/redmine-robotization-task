@@ -1,16 +1,14 @@
 package com.redmine.rz.issue;
 
 import com.redmine.rz.bean.IssueBean;
-import com.taskadapter.redmineapi.IssueManager;
-import com.taskadapter.redmineapi.Params;
-import com.taskadapter.redmineapi.RedmineManager;
-import com.taskadapter.redmineapi.RedmineManagerFactory;
-import com.taskadapter.redmineapi.bean.Issue;
-import com.taskadapter.redmineapi.bean.IssueFactory;
-import com.taskadapter.redmineapi.bean.Tracker;
-import com.taskadapter.redmineapi.bean.TrackerFactory;
+import com.redmine.rz.bean.ProjectBean;
+import com.redmine.rz.bean.RedmineUser;
+import com.taskadapter.redmineapi.*;
+import com.taskadapter.redmineapi.bean.*;
 import com.taskadapter.redmineapi.internal.ResultsWrapper;
+import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -181,7 +179,7 @@ public class RedmineIssueManager {
      * @date: 2018/12/24 上午9:55
      * @mofified By:
      */
-    public Boolean getIssueTitle(String issueTitile, int assigneeId) throws Exception {
+    public Boolean getIssueForTitle(String issueTitile, int assigneeId) throws Exception {
 
         // 声明Redmine管理器
         RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
@@ -190,9 +188,7 @@ public class RedmineIssueManager {
         IssueManager issueManager = mgr.getIssueManager();
 
         // 根据ID获取问题
-        Params parameters = new Params();
-        parameters.add("title", issueTitile);
-        parameters.add("assigneeId", String.valueOf(assigneeId));
+        Map parameters = initParames(issueTitile, assigneeId);
 
         ResultsWrapper<Issue> issueResultsWrapper = issueManager.getIssues(parameters);
 
@@ -238,6 +234,85 @@ public class RedmineIssueManager {
     }
 
     /**
+     * @description：获取任务的个数
+     * @version 1.0
+     * @author: Yang.Chang
+     * @email: cy880708@163.com
+     * @date: 2019/1/3 上午11:59
+     * @param userId （用户主键，输入则查询对应用户所有任务数量，不输查所有）
+     * @mofified By:
+     */
+    public int getIssuesCountByUserId(int userId) throws Exception {
+
+        // 声明Redmine管理器
+        RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
+
+        // 获取问题管理对象
+        IssueManager issueManager = mgr.getIssueManager();
+
+        // 根据ID获取问题
+        Map parameters = initParames(null, userId);
+
+        // 获取所有问题
+        ResultsWrapper<Issue> issues = issueManager.getIssues(parameters);
+
+        int count = 0;
+        if(issues.hasSomeResults()) {
+            count = issues.getResults().size();
+        }
+
+        return count;
+    }
+
+    /**
+     * @description：查询任务总数（根据项目编号）
+     * @version 1.0
+     * @author: Yang.Chang
+     * @email: cy880708@163.com
+     * @date: 2019/1/3 下午1:20
+     * @mofified By:
+     */
+    public int getIssuesCountByPro(String prokey) throws Exception {
+
+        // 声明Redmine管理器
+        RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
+
+        // 获取问题管理对象
+        IssueManager issueManager = mgr.getIssueManager();
+
+        // 获取所有问题
+        List<Issue> issues = issueManager.getIssues(prokey, null);
+
+        int count = 0;
+        if(issues.size() > 0) {
+            count = issues.size();
+        }
+
+        return count;
+    }
+
+    /**
+     * @description：初始化查询条件
+     * @version 1.0
+     * @author: Yang.Chang
+     * @email: cy880708@163.com
+     * @date: 2019/1/3 下午1:14
+     * @param title 标题
+     * @param assigneeId 被指派人ID
+     * @mofified By:
+     */
+    public Map initParames(String title, int assigneeId) {
+        Map<String, String> params = new HashMap<String, String>();
+        if(!StringUtils.isEmpty(title)) {
+            params.put("subject", title);
+        } else
+        if(assigneeId != 0) {
+            params.put("assigned_to_id", String.valueOf(assigneeId));
+        }
+        return params;
+    }
+
+    /**
      * @description：删除所有问题
      * @version 1.0
      * @author: Yang.Chang
@@ -266,7 +341,16 @@ public class RedmineIssueManager {
         }
     }
 
+    /**
+     * @description：初始化任务实体
+     * @version 1.0
+     * @author: Yang.Chang
+     * @email: cy880708@163.com
+     * @date: 2019/1/3 下午12:02
+     * @mofified By:
+     */
     public static IssueBean initIssueBean(String proName, String title, String description) {
+
         IssueBean issueBean = new IssueBean();
         //项目名称
         issueBean.setProId(1);
@@ -275,10 +359,184 @@ public class RedmineIssueManager {
         //描述信息
         issueBean.setDescription(description);
         return issueBean;
+
+    }
+
+    /**
+     * @description：查询Redmine所有项目
+     * @version 1.0
+     * @author: Yang.Chang
+     * @email: cy880708@163.com
+     * @date: 2019/1/3 下午1:34
+     * @mofified By:
+     */
+    public List<ProjectBean> getRedmineProjects() throws RedmineException {
+
+        // 声明Redmine管理器
+        RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
+
+        // 获取项目管理对象
+        ProjectManager projectManager = mgr.getProjectManager();
+
+        // 获取所有项目
+        List<Project> projects = projectManager.getProjects();
+
+        // 声明响应实体list
+        List<ProjectBean> projectBeans = new ArrayList<>();
+
+        for(Project project : projects) {
+            ProjectBean projectBean = new ProjectBean();
+            projectBean.setProId(project.getId());
+            projectBean.setProName(project.getName());
+            projectBean.setDescription(project.getDescription());
+            projectBeans.add(projectBean);
+        }
+
+        return projectBeans;
+
+    }
+
+    /**
+     * @description：查询所有用户
+     * @version 1.0
+     * @author: Yang.Chang
+     * @email: cy880708@163.com
+     * @date: 2019/1/3 下午1:34
+     * @mofified By:
+     */
+    public List<RedmineUser> getUsers() throws RedmineException {
+
+        // 声明Redmine管理器
+        RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
+
+        // 获取用户管理对象
+        UserManager userManager = mgr.getUserManager();
+
+        // 获取所有用户
+        List<User> users = userManager.getUsers();
+
+        // 声明响应bean
+        List<RedmineUser> redmineUsers = new ArrayList<>();
+
+        // 循环并封装bean
+        for(User user : users) {
+            RedmineUser redmineUser = new RedmineUser();
+            redmineUser.setUserId(user.getId());
+            redmineUser.setUserName(user.getFullName());
+            redmineUsers.add(redmineUser);
+        }
+
+        return redmineUsers;
+    }
+
+    /**
+     * @description：根据用户主键查询所有任务
+     * @version 1.0
+     * @author: Yang.Chang
+     * @email: cy880708@163.com
+     * @date: 2019/1/3 下午1:51
+     * @mofified By:
+     */
+    public List<IssueBean> getIssuesByUserId(int userId) throws RedmineException {
+
+        List<IssueBean> issueBeans = new ArrayList<>();
+
+        // 声明Redmine管理器
+        RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
+
+        // 获取任务管理对象
+        IssueManager issueManager = mgr.getIssueManager();
+
+        Map params = initParames(null, userId);
+
+        ResultsWrapper<Issue> issueResultsWrapper = issueManager.getIssues(params);
+
+        // 初始化响应信息bean
+        if(issueResultsWrapper.hasSomeResults()) {
+            List<Issue> issues = issueResultsWrapper.getResults();
+            if(issues.size() > 0) {
+                for(Issue issue : issues) {
+                    IssueBean issueBean = new IssueBean();
+                    issueBean.setId(issue.getId());
+                    issueBean.setProId(issue.getProjectId());
+                    issueBean.setTitle(issue.getSubject());
+                    issueBean.setDescription(issue.getDescription());
+                    issueBeans.add(issueBean);
+                }
+            }
+        }
+
+        return issueBeans;
+
+    }
+
+    /**
+     * @description：查询所有问题
+     * @version 1.0
+     * @author: Yang.Chang
+     * @email: cy880708@163.com
+     * @date: 2018/12/24 下午4:42
+     * @mofified By:
+     */
+    public static void findIssue() throws Exception {
+        // 目标项目
+        String projectKey = "first_pro";
+
+        // 声明Redmine管理器
+        RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
+
+        // 获取问题管理对象
+        IssueManager issueManager = mgr.getIssueManager();
+
+        // 获取所有问题
+        List<Issue> issues = issueManager.getIssues(projectKey, null);
+
+        // 迭代输出问题
+        for (Issue issue : issues) {
+            System.out.println(issue.getDescription());
+            System.out.println(issue.toString());
+            System.out.println(issue.getAssigneeId());
+        }
+    }
+
+    /**
+     * @description：查询所有问题（某用户）
+     * @version 1.0
+     * @author: Yang.Chang
+     * @email: cy880708@163.com
+     * @date: 2018/12/24 下午4:42
+     * @mofified By:
+     */
+    public static void findIssueByUserId(String userId) throws Exception {
+        // 目标项目
+        String projectKey = "first_pro";
+
+        // 声明Redmine管理器
+        RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
+
+        // 获取问题管理对象
+        IssueManager issueManager = mgr.getIssueManager();
+
+        Params params = new Params();
+        params.add("assigned_to_id", userId);
+
+        // 获取所有问题
+        ResultsWrapper<Issue> issueResultsWrapper = issueManager.getIssues(params);
+
+        if(issueResultsWrapper.hasSomeResults()) {
+            List<Issue> issues = issueResultsWrapper.getResults();
+            // 迭代输出问题
+            for (Issue issue : issues) {
+                System.out.println("DES ---- " +issue.getDescription());
+                System.out.println("ASS ---- " +issue.getAssigneeId());
+            }
+        }
+
     }
 
     public static void main(String[] args) throws Exception {
 //        RedmineIssueManager.deleteIssues();
+        RedmineIssueManager.findIssueByUserId("9");
 
 //        IssueBean issueBean = RedmineIssueManager.initIssueBean("first_pro", "[V3.3.1-D]创建用户", "1.创建用户表\n 2.新增创建用户表单\n 3.完成用户创建功能");
 //        IssueBean issueBean1 = RedmineIssueManager.initIssueBean("first_pro", "[V3.3.1-D]删除用户", "1.删除用户信息，用户信息状态标记已删除，数据留存");
