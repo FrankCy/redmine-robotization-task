@@ -50,9 +50,20 @@ for (Issue issue : issues) {
 }
 ```
 
-### 地址 ###
+## 操作手册 ##
+
+### 配置流程 ###
+- 修改redmine配置
+```
+位置：com.redmine.rz.issue.RedmineIssueManager (uri / apiAccessKey)
+```
+
+- Maven构建
+maven构建后会在系统根目录target下生成应用jar包，使用此jar包发布，并使用应用
+
+### 访问 ###
 地址|描述|
----|:--:
+---|:--
 首页| http://localhost:8681/redmine/index
 用户| http://192.168.10.110:3000/users.xml
 任务| http://192.168.10.110:3000/issues.xml
