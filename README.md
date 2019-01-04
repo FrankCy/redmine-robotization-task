@@ -50,3 +50,9 @@ for (Issue issue : issues) {
     issueManager.deleteIssue(issue.getId());
 }
 ```
+
+### 地址 ###
+访问地址：
+http://localhost:8681/redmine/index
+<br/>
+
