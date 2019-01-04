@@ -30,6 +30,11 @@ public class IssueBean {
     private String title;
 
     /**
+     * 任务创建人
+     */
+    private int authorId;
+
+    /**
      * 任务被指派人
      */
     private int assigneeId;
@@ -78,6 +83,14 @@ public class IssueBean {
         this.title = title;
     }
 
+    public int getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
+    }
+
     public int getAssigneeId() {
         return assigneeId;
     }
@@ -124,6 +137,7 @@ public class IssueBean {
                 "id=" + id +
                 ", proId=" + proId +
                 ", title='" + title + '\'' +
+                ", authorId=" + authorId +
                 ", assigneeId=" + assigneeId +
                 ", description='" + description + '\'' +
                 ", dueDate=" + dueDate +

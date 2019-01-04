@@ -42,7 +42,7 @@ public class RedmineIssueManager {
      * @date: 2018/12/24 上午9:55
      * @mofified By:
      */
-    public boolean createIssueBug(String proName, String title, String description) throws Exception {
+    public boolean createIssueBug(IssueBean issueBean) throws Exception {
 
         // Redmine管理器
         RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
@@ -51,17 +51,17 @@ public class RedmineIssueManager {
         // 设置跟踪 1：问题；2：功能
         Tracker tracker = TrackerFactory.create(1);
         // 创建任务，并赋标题
-        Issue issueToCreate = IssueFactory.create(1, isEmpty(title));
+        Issue issueToCreate = IssueFactory.create(1, isEmpty(issueBean.getTitle()));
         // 设置状态新建
         issueToCreate.setStatusId(1);
         // 设置跟踪
         issueToCreate.setTracker(tracker);
         // 设置发起人
-        issueToCreate.setAuthorId(1);
+        issueToCreate.setAuthorId(issueBean.getAuthorId());
         // 设置指派人
-        issueToCreate.setAssigneeId(9);
+        issueToCreate.setAssigneeId(issueBean.getAssigneeId());
         // 设置问题描述
-        issueToCreate.setDescription(isEmpty(description));
+        issueToCreate.setDescription(isEmpty(issueBean.getDescription()));
         // 创建任务
         issueManager.createIssue(issueToCreate);
 
@@ -93,11 +93,11 @@ public class RedmineIssueManager {
         // 任务创建人
         issueToCreate.setAuthorId(1);
         // 任务被指派人
-        issueToCreate.setAssigneeId(9);
+        issueToCreate.setAssigneeId(issueBean.getAssigneeId());
         // 描述
         issueToCreate.setDescription(issueBean.getDescription());
         // 默认插入到项目标号为1的项目中
-        issueToCreate.setProjectId(1);
+        issueToCreate.setProjectId(issueBean.getProId());
         // 到期日期（Date）
         issueToCreate.setDueDate(issueBean.getDueDate());
         // 预估时间（Float）
@@ -107,6 +107,32 @@ public class RedmineIssueManager {
         issueManager.createIssue(issueToCreate);
 
         return true;
+    }
+
+    /**
+     * @description：根据用户Id，查询用户名字
+     * @version 1.0
+     * @author: Yang.Chang
+     * @email: cy880708@163.com
+     * @date: 2019/1/4 下午4:24
+     * @mofified By:
+     */
+    public String getUserName(int userId) throws RedmineException {
+        // 声明Redmine管理器
+        RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
+
+        // 获取用户管理对象
+        UserManager userManager =  mgr.getUserManager();
+
+        // 获取用户
+        User user = userManager.getUserById(userId);
+
+        // 判断用户名字
+        String name = "";
+        if(user.getFirstName() != null && user.getFirstName() != null) {
+            name = user.getFirstName() + user.getLastName();
+        }
+        return  name;
     }
 
     /**
@@ -526,6 +552,16 @@ public class RedmineIssueManager {
 
     }
 
+    public static void updateIssueInfo() throws RedmineException {
+        RedmineManager redmineManager = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
+        IssueManager issueManager = redmineManager.getIssueManager();
+        Issue issue = issueManager.getIssueById(314, Include.watchers);
+        issue.setAuthorId(11);
+        issue.setAuthorName("玥龙 苏");
+        issue.setSubject("我我我我");
+        issueManager.update(issue);
+    }
+
     public static void main(String[] args) throws Exception {
 //        RedmineIssueManager.deleteIssues();
 //        RedmineIssueManager.findIssueByUserId("9");
@@ -552,6 +588,7 @@ public class RedmineIssueManager {
 //            e.printStackTrace();
 //        }
 
+        /*
         //定义起始日期
         Date d1 = new SimpleDateFormat("yyyyMMdd").parse("20150101");
         //定义结束日期
@@ -574,6 +611,8 @@ public class RedmineIssueManager {
             listOne.add(i);
             listTwo.add(listOne);
         }
+        */
+        updateIssueInfo();
 
     }
 }

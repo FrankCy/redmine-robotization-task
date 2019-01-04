@@ -107,6 +107,12 @@ public class ResolveExcelServiceImpl implements ResolveExcelService {
                         String estimatedHours = row.getCell(4).getStringCellValue();
                         issueBean.setEstimatedHours(Float.valueOf(estimatedHours));
                     }
+                    //所属项目
+                    if (row.getCell(5) != null) {
+                        row.getCell(5).setCellType(Cell.CELL_TYPE_NUMERIC);
+                        Double proId = row.getCell(5).getNumericCellValue();
+                        issueBean.setProId(proId.intValue());
+                    }
                     list.add(issueBean);
                 }
             }
