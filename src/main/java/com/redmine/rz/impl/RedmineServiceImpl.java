@@ -98,7 +98,7 @@ public class RedmineServiceImpl implements RedmineService {
                 userIssue.setUserIssues(redmineIssueManager.getIssuesByUserId(user.getUserId()));
                 userIssue.setUserId(user.getUserId());
                 userIssue.setUserName(user.getUserName());
-                logger.info("用户任务信息为"+ userIssue.toString());
+//                logger.info("用户任务信息为"+ userIssue.toString());
                 issues.add(userIssue);
             }
 

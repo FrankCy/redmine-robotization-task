@@ -7,7 +7,6 @@ import com.taskadapter.redmineapi.*;
 import com.taskadapter.redmineapi.bean.*;
 import com.taskadapter.redmineapi.internal.ResultsWrapper;
 import com.xiaoleilu.hutool.date.DateTime;
-import org.json.JSONObject;
 import org.springframework.util.StringUtils;
 
 import java.text.SimpleDateFormat;
