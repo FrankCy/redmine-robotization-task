@@ -4,7 +4,8 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-    <title>BDJR-REDMINE-VIEWING</title>
+    <title>百达金融任务管理平台</title>
+    <link rel="icon" href="../img/bdjr_logo.png" sizes="32x32">
     <meta name="description" content="">
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="../css/linearicons.css">
