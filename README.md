@@ -51,19 +51,9 @@ for (Issue issue : issues) {
 ```
 
 ### 地址 ###
-访问地址：
-http://localhost:8681/redmine/index
-<br/>
-
-用户：
-http://192.168.10.110:3000/users.xml
-<br/>
-
-任务状态：
-http://192.168.10.110:3000/issue_statuses.xml
-<br/>
-
-任务：
-http://192.168.10.110:3000/issues.xml
-<br/>
-
+地址|描述|
+---|:--:
+首页| http://localhost:8681/redmine/index
+用户| http://192.168.10.110:3000/users.xml
+任务| http://192.168.10.110:3000/issues.xml
+任务状态| http://192.168.10.110:3000/issue_statuses.xml
