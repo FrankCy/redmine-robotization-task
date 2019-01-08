@@ -35,7 +35,7 @@ issueManager.createIssue(issueToCreate);
 ### 删除 ###
 ```java
 // 目标项目
-String projectKey = "first_pro";
+String projectKey = "bdjr-pzh";
 // 声明Redmine管理器
 RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
 // 获取问题管理对象

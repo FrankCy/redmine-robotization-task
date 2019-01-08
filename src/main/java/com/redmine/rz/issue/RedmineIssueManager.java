@@ -54,6 +54,8 @@ public class RedmineIssueManager {
         Issue issueToCreate = IssueFactory.create(1, isEmpty(issueBean.getTitle()));
         // 设置状态新建
         issueToCreate.setStatusId(1);
+        // 设置项目
+        issueToCreate.setProjectId(issueBean.getProId());
         // 设置跟踪
         issueToCreate.setTracker(tracker);
         // 设置发起人
@@ -228,7 +230,7 @@ public class RedmineIssueManager {
      */
     public static String validateProName(String proName) {
 
-        return "".equals(proName) == true ? "first_pro" : proName;
+        return "".equals(proName) == true ? "bdjr-pzh" : proName;
 
     }
 
@@ -341,7 +343,7 @@ public class RedmineIssueManager {
      */
     public static void deleteIssues() throws Exception {
         // 目标项目
-        String projectKey = "first_pro";
+        String projectKey = "bdjr-pzh";
         // 声明Redmine管理器
         RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
         // 获取问题管理对象
@@ -498,7 +500,7 @@ public class RedmineIssueManager {
      */
     public static void findIssue() throws Exception {
         // 目标项目
-        String projectKey = "first_pro";
+        String projectKey = "bdjr-pzh";
 
         // 声明Redmine管理器
         RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
@@ -527,7 +529,7 @@ public class RedmineIssueManager {
      */
     public static void findIssueByUserId(String userId) throws Exception {
         // 目标项目
-        String projectKey = "first_pro";
+        String projectKey = "bdjr-pzh";
 
         // 声明Redmine管理器
         RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
@@ -563,56 +565,13 @@ public class RedmineIssueManager {
     }
 
     public static void main(String[] args) throws Exception {
-//        RedmineIssueManager.deleteIssues();
-//        RedmineIssueManager.findIssueByUserId("9");
 
-//        IssueBean issueBean = RedmineIssueManager.initIssueBean("first_pro", "[V3.3.1-D]创建用户", "1.创建用户表\n 2.新增创建用户表单\n 3.完成用户创建功能");
-//        IssueBean issueBean1 = RedmineIssueManager.initIssueBean("first_pro", "[V3.3.1-D]删除用户", "1.删除用户信息，用户信息状态标记已删除，数据留存");
-//        IssueBean issueBean2 = RedmineIssueManager.initIssueBean("first_pro", "[V3.3.1-D]修改用户", "1.修改表单\n 2.修改功能\n 3.并新增修改记录");
-//        IssueBean issueBean3 = RedmineIssueManager.initIssueBean("first_pro", "[V3.3.1-D]查询用户", "1.查询用户表单\n 2.多条件查询（用户名、性别、年龄、部门、所属类型）\n 3.支持分页（规则以标准功能需求为准）");
-//
-//        List<IssueBean> list = new ArrayList<>();
-//        list.add(issueBean);
-//        list.add(issueBean1);
-//        list.add(issueBean2);
-//        list.add(issueBean3);
-//
-//        try {
-//            RedmineIssueManager redmineIssueManager = new RedmineIssueManager();
-//            for(IssueBean ib : list) {
-//                boolean uploadFlag = redmineIssueManager.createIssueThings( ib.getTitle(), ib.getDescription());
-//                System.out.println(uploadFlag);
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-        /*
-        //定义起始日期
-        Date d1 = new SimpleDateFormat("yyyyMMdd").parse("20150101");
-        //定义结束日期
-        Date d2 = new SimpleDateFormat("yyyyMMdd").parse("20191231");
-        //定义日期实例
-        Calendar dd = Calendar.getInstance();
-        //设置日期起始时间
-        dd.setTime(d1);
-        //判断是否到结束日期
-        int i=2000;
-        List listTwo = new ArrayList();
-        while(dd.getTime().before(d2)){
-            i = i-1;
-            DateTime dateTime = new DateTime(dd.getTime());
-            //进行当前日期月份加1
-            dd.add(Calendar.DAY_OF_MONTH, 1);
-            List listOne = new ArrayList();
-            listOne.add(dateTime.getTime());
-            System.out.println(dateTime.getTime());
-            listOne.add(i);
-            listTwo.add(listOne);
-        }
-        */
-        updateIssueInfo();
-
+        RedmineIssueManager rim = new RedmineIssueManager();
+        IssueBean issueBean = new IssueBean();
+        issueBean.setProId(2);
+        issueBean.setTitle("[测试]错误问题");
+        issueBean.setDescription("一些描述信息");
+        issueBean.setAssigneeId(9);
+        rim.createIssueBug(issueBean);
     }
 }
