@@ -116,7 +116,7 @@
             }
 
             getRedmineIssueJson = function(proName){
-                $.getJSON('/redmine/getRedmineIssueJson?proName='+proName, function (data) {
+                $.getJSON('/redmine/getRedmineIssueJson', function (data) {
                     var series = [];
 
                     for(i=0; i<data.length; i++) {

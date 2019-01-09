@@ -3,7 +3,6 @@ package com.redmine.rz.controller;
 import com.redmine.rz.bean.*;
 import com.redmine.rz.service.RedmineService;
 import com.redmine.rz.service.ResolveExcelService;
-import com.xiaoleilu.hutool.date.DateTime;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -16,10 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -116,23 +111,9 @@ public class RedmineController {
      */
     @RequestMapping(value = "/getRedmineIssueJson")
     @ResponseBody
-    public List<LineChart> getRedmineIssueJson(@RequestParam("proName") String proName) throws Exception {
-        proName = StringUtils.isEmpty(proName) ? "bdjr-pzh" : proName;
+    public List<LineChart> getRedmineIssueJson() throws Exception {
         List<LineChart> lineCharts = redmineService.getRedmineIssueJson();
         logger.info("任务图：" + lineCharts.toString());
-//        LineChart lineChart = new LineChart();
-//        lineChart.setProName("小黑");
-//        lineChart.setProData("[4,7,-5,5,9]");
-//        LineChart lineChart1 = new LineChart();
-//        lineChart1.setProName("小白");
-//        lineChart1.setProData("[2,-4,-3,6,8]");
-//        LineChart lineChart2 = new LineChart();
-//        lineChart2.setProName("小灰");
-//        lineChart2.setProData("[1,4,-5,7,4]");
-//        List<LineChart> lineCharts = new ArrayList<>();
-//        lineCharts.add(lineChart1);
-//        lineCharts.add(lineChart2);
-//        lineCharts.add(lineChart);
         return lineCharts;
     }
 
