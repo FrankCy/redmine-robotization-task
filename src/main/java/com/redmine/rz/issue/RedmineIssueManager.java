@@ -398,7 +398,7 @@ public class RedmineIssueManager {
      * @date: 2019/1/3 下午1:34
      * @mofified By:
      */
-    public List<ProjectBean> getRedmineProjects() throws RedmineException {
+    public List<ProjectBean>    getRedmineProjects() throws RedmineException {
 
         // 声明Redmine管理器
         RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
@@ -416,6 +416,7 @@ public class RedmineIssueManager {
             ProjectBean projectBean = new ProjectBean();
             projectBean.setProId(project.getId());
             projectBean.setProName(project.getName());
+            projectBean.setIdentifier(project.getIdentifier());
             projectBean.setDescription(project.getDescription());
             projectBeans.add(projectBean);
         }

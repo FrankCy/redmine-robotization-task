@@ -125,41 +125,47 @@ public class RedmineServiceImpl implements RedmineService {
     }
 
     @Override
-    public String getRedmineIssueJson(String proName) throws Exception {
+    public List<LineChart> getRedmineIssueJson() throws Exception {
 
         RedmineIssueManager redmineIssueManager = new RedmineIssueManager();
+        List<ProjectBean> projectBeans = redmineIssueManager.getRedmineProjects();
+        List<LineChart> lineCharts = new ArrayList<>();
+        for(ProjectBean pb : projectBeans) {
+            LineChart lineChart = new LineChart();
+            List<IssueBean> issueBeans = redmineIssueManager.getIssues(pb.getIdentifier());
+            Map<Long, Integer> map = new HashMap();
 
-        List<IssueBean> issueBeans = redmineIssueManager.getIssues(proName);
-
-        Map<Long, Integer> map = new HashMap();
-
-        //将任务迭代并封装成燃尽图数据源
-        for(IssueBean issueBean : issueBeans) {
-            Date beanStartDate = issueBean.getStartDate();
-            String sd = new SimpleDateFormat("yyyyMMdd").format(beanStartDate);
-            Date startDate = new SimpleDateFormat("yyyyMMdd").parse(sd);
-            //定义日期实例
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(startDate);
-            DateTime dateTime = new DateTime(calendar.getTime());
-            Long time = dateTime.getTime();
-            if(map.containsKey(time)) {
-                map.put(time, Integer.valueOf(map.get(time).toString()) + 1);
-            } else {
-                map.put(time, 1);
+            //将任务迭代并封装成燃尽图数据源
+            for(IssueBean issueBean : issueBeans) {
+                Date beanStartDate = issueBean.getStartDate();
+                String sd = new SimpleDateFormat("yyyyMMdd").format(beanStartDate);
+                Date startDate = new SimpleDateFormat("yyyyMMdd").parse(sd);
+                //定义日期实例
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(startDate);
+                DateTime dateTime = new DateTime(calendar.getTime());
+                Long time = dateTime.getTime();
+                if(map.containsKey(time)) {
+                    map.put(time, Integer.valueOf(map.get(time).toString()) + 1);
+                } else {
+                    map.put(time, 1);
+                }
             }
+
+            //迭代Map，并转成List
+            List list = new ArrayList();
+            for (Long key : map.keySet()) {
+                List infoList = new ArrayList();
+                infoList.add(key);
+                infoList.add(map.get(key));
+                list.add(infoList);
+            }
+            lineChart.setProName(pb.getProName());
+            lineChart.setProData(list.toString());
+            lineCharts.add(lineChart);
         }
 
-        //迭代Map，并转成List
-        List list = new ArrayList();
-        for (Long key : map.keySet()) {
-            List infoList = new ArrayList();
-            infoList.add(key);
-            infoList.add(map.get(key));
-            list.add(infoList);
-        }
-
-        return list.toString();
+        return lineCharts;
     }
 
     @Override

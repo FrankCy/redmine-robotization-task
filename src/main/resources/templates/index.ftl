@@ -117,6 +117,12 @@
 
             getRedmineIssueJson = function(proName){
                 $.getJSON('/redmine/getRedmineIssueJson?proName='+proName, function (data) {
+                    var series = [];
+
+                    for(i=0; i<data.length; i++) {
+                        series.push({"name": data[i].proName, "data": eval(data[i].proData)});
+                    }
+
                     chart = Highcharts.chart('container2', {
                         chart: {
                             zoomType: 'x',
@@ -176,16 +182,7 @@
                                 threshold: null
                             }
                         },
-                        series: [{
-                            name: '小张',
-                            data: [5, 3, 4, 7, 2]
-                        }, {
-                            name: '小彭',
-                            data: [2, -2, -3, 2, 1]
-                        }, {
-                            name: '小潘',
-                            data: [3, 4, 4, -2, 5]
-                        }]
+                        series: series
                     });
                 });
             }

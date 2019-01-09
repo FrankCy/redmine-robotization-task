@@ -18,6 +18,8 @@ public class ProjectBean {
 
     private String description;
 
+    private String identifier;
+
     public int getProId() {
         return proId;
     }
@@ -42,4 +44,11 @@ public class ProjectBean {
         this.description = description;
     }
 
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
 }

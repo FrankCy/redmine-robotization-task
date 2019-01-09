@@ -1,9 +1,6 @@
 package com.redmine.rz.service;
 
-import com.redmine.rz.bean.IssueBean;
-import com.redmine.rz.bean.ProjectBean;
-import com.redmine.rz.bean.ServiceResult;
-import com.redmine.rz.bean.UserIssue;
+import com.redmine.rz.bean.*;
 
 import java.util.List;
 
@@ -78,7 +75,7 @@ public interface RedmineService {
      * @date: 2019/1/9 上午11:18
      * @mofified By:
      */
-    String getRedmineIssueJson(String proName) throws Exception;
+    List<LineChart> getRedmineIssueJson() throws Exception;
 
     /**
      * @description 获取饼状图
