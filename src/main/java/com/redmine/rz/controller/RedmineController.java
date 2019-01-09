@@ -119,8 +119,8 @@ public class RedmineController {
      */
     @RequestMapping(value = "/getRedmineIssueJson")
     @ResponseBody
-    public String getRedmineIssueJson() throws Exception {
-        String proName = "bdjr-pzh";
+    public String getRedmineIssueJson(@RequestParam("proName") String proName) throws Exception {
+        proName = StringUtils.isEmpty(proName) ? "bdjr-pzh" : proName;
         String issueInfo = redmineService.getRedmineIssueJson(proName);
         logger.info("任务图：" + issueInfo);
         return issueInfo;
@@ -128,8 +128,8 @@ public class RedmineController {
 
     @RequestMapping(value = "/getIssueProportion")
     @ResponseBody
-    public String getIssueProportion() throws Exception {
-        String proName = "bdjr-pzh";
+    public String getIssueProportion(@RequestParam("proName") String proName) throws Exception {
+        proName = StringUtils.isEmpty(proName) ? "bdjr-pzh" : proName;
         String issueInfo = redmineService.getIssueProportion(proName);
         logger.info("饼状图：" + issueInfo);
         return issueInfo;

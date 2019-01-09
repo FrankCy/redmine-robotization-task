@@ -6,6 +6,8 @@ import com.redmine.rz.bean.RedmineUser;
 import com.taskadapter.redmineapi.*;
 import com.taskadapter.redmineapi.bean.*;
 import com.taskadapter.redmineapi.internal.ResultsWrapper;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -601,12 +603,18 @@ public class RedmineIssueManager {
 
     public static void main(String[] args) throws Exception {
 
-        RedmineIssueManager rim = new RedmineIssueManager();
-        IssueBean issueBean = new IssueBean();
-        issueBean.setProId(2);
-        issueBean.setTitle("[测试]错误问题");
-        issueBean.setDescription("一些描述信息");
-        issueBean.setAssigneeId(9);
-        rim.createIssueBug(issueBean);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", "s1");
+        jsonObject.put("data", "[129.9, 171.5, 306.4, 429.2, 144.0, 176.0, 135.6, 248.5, 216.4, 194.1, 95.6, 54.4]");
+
+        JSONObject jsonObject2 = new JSONObject();
+        jsonObject2.put("name", "s2");
+        jsonObject2.put("data", "[121.9, 216.4, 194.1, 95.6, 54.4]");
+
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put(jsonObject);
+        jsonArray.put(jsonObject2);
+        System.out.println(jsonArray.toString());
+
     }
 }
