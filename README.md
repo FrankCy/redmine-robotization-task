@@ -65,6 +65,6 @@ maven构建后会在系统根目录target下生成应用jar包，使用此jar包
 地址|描述|
 ---|:--
 首页| http://localhost:8681/redmine/index
-用户| http://192.168.10.110:3000/users.xml
-任务| http://192.168.10.110:3000/issues.xml
-任务状态| http://192.168.10.110:3000/issue_statuses.xml
+用户| http://redmine-home:3000/users.xml
+任务| http://redmine-home:3000/issues.xml
+任务状态| http://redmine-home:3000/issue_statuses.xml
