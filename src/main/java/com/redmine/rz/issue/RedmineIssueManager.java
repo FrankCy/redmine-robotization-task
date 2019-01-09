@@ -6,11 +6,12 @@ import com.redmine.rz.bean.RedmineUser;
 import com.taskadapter.redmineapi.*;
 import com.taskadapter.redmineapi.bean.*;
 import com.taskadapter.redmineapi.internal.ResultsWrapper;
-import com.xiaoleilu.hutool.date.DateTime;
 import org.springframework.util.StringUtils;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @version 1.0
@@ -145,7 +146,7 @@ public class RedmineIssueManager {
      * @date: 2018/12/24 上午9:55
      * @mofified By:
      */
-    public static List<Issue> getIssues(String proName) throws Exception {
+    public List<IssueBean> getIssues(String proName) throws Exception {
 
         // 声明Redmine管理器
         RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
@@ -159,13 +160,21 @@ public class RedmineIssueManager {
         // 获取所有问题
         List<Issue> issues = issueManager.getIssues(projectKey, null);
 
+        // 声明返回值
+        List<IssueBean> issueBeans = new ArrayList<>();
+
         // 迭代输出问题
-        for (Issue issue : issues) {
-            System.out.println(issue.getDescription());
-            System.out.println(issue.toString());
+        if(issues != null && issues.size() > 0) {
+            for (Issue issue : issues) {
+                IssueBean issueBean = new IssueBean();
+                issueBean.setStartDate(issue.getStartDate());
+                issueBean.setAssigneeId(issue.getAssigneeId());
+                issueBean.setDueDate(issue.getDueDate());
+                issueBeans.add(issueBean);
+            }
         }
 
-        return issues.size() > 0 ? issues : null;
+        return issueBeans;
 
     }
 
@@ -447,6 +456,32 @@ public class RedmineIssueManager {
         }
 
         return redmineUsers;
+    }
+
+    /**
+     * @description：查询所有用户，并转换成Map，key是userId，value是userName
+     * @version 1.0
+     * @author: Yang.Chang
+     * @email: cy880708@163.com
+     * @date: 2019/1/3 下午1:34
+     * @mofified By:
+     */
+    public Map getUsersInfo() throws RedmineException {
+
+        // 声明Redmine管理器
+        RedmineManager mgr = RedmineManagerFactory.createWithApiKey(uri, apiAccessKey);
+
+        // 获取用户管理对象
+        UserManager userManager = mgr.getUserManager();
+
+        // 获取所有用户
+        List<User> users = userManager.getUsers();
+
+        Map<Integer, String> map = new HashMap<>();
+        for(User user : users) {
+            map.put(user.getId(), user.getLastName() + user.getFirstName());
+        }
+        return map;
     }
 
     /**

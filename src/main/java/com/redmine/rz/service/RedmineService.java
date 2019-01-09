@@ -70,4 +70,24 @@ public interface RedmineService {
      */
     List<ProjectBean> getRedmineProjects();
 
+    /**
+     * @description 获取燃尽图
+     * @version 1.0
+     * @author: Yang.Chang
+     * @email: cy880708@163.com
+     * @date: 2019/1/9 上午11:18
+     * @mofified By:
+     */
+    String getRedmineIssueJson(String proName) throws Exception;
+
+    /**
+     * @description 获取饼状图
+     * @version 1.0
+     * @author: Yang.Chang
+     * @email: cy880708@163.com
+     * @date: 2019/1/9 上午11:18
+     * @mofified By:
+     */
+    String getIssueProportion(String proName) throws Exception;
+
 }

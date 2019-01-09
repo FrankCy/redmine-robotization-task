@@ -4,12 +4,16 @@ import com.redmine.rz.bean.*;
 import com.redmine.rz.issue.RedmineIssueManager;
 import com.redmine.rz.service.RedmineService;
 import com.taskadapter.redmineapi.RedmineException;
+import com.xiaoleilu.hutool.date.DateTime;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.security.Key;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @version 1.0
@@ -98,7 +102,6 @@ public class RedmineServiceImpl implements RedmineService {
                 userIssue.setUserIssues(redmineIssueManager.getIssuesByUserId(user.getUserId()));
                 userIssue.setUserId(user.getUserId());
                 userIssue.setUserName(user.getUserName());
-//                logger.info("用户任务信息为"+ userIssue.toString());
                 issues.add(userIssue);
             }
 
@@ -119,6 +122,81 @@ public class RedmineServiceImpl implements RedmineService {
             e.printStackTrace();
         }
         return list;
+    }
+
+    @Override
+    public String getRedmineIssueJson(String proName) throws Exception {
+
+        RedmineIssueManager redmineIssueManager = new RedmineIssueManager();
+
+        List<IssueBean> issueBeans = redmineIssueManager.getIssues(proName);
+
+        Map<Long, Integer> map = new HashMap();
+
+        //将任务迭代并封装成燃尽图数据源
+        for(IssueBean issueBean : issueBeans) {
+            Date beanStartDate = issueBean.getStartDate();
+            String sd = new SimpleDateFormat("yyyyMMdd").format(beanStartDate);
+            Date startDate = new SimpleDateFormat("yyyyMMdd").parse(sd);
+            //定义日期实例
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(startDate);
+            DateTime dateTime = new DateTime(calendar.getTime());
+            Long time = dateTime.getTime();
+            if(map.containsKey(time)) {
+                map.put(time, Integer.valueOf(map.get(time).toString()) + 1);
+            } else {
+                map.put(time, 1);
+            }
+        }
+
+        //迭代Map，并转成List
+        List list = new ArrayList();
+        for (Long key : map.keySet()) {
+            List infoList = new ArrayList();
+            infoList.add(key);
+            infoList.add(map.get(key));
+            list.add(infoList);
+        }
+
+        return list.toString();
+    }
+
+    @Override
+    public String getIssueProportion(String proName) throws Exception {
+
+        RedmineIssueManager redmineIssueManager = new RedmineIssueManager();
+
+        //获取任务总数
+        int issueCount = redmineIssueManager.getIssuesCountByPro(proName);
+
+        //获取所有任务
+        List<IssueBean> issueBeans = redmineIssueManager.getIssues(proName);
+
+        //获取用户信息
+        Map userInfoMap = redmineIssueManager.getUsersInfo();
+
+        //声明Map
+        Map<Integer, BigDecimal> map = new HashMap();
+        for(IssueBean issueBean : issueBeans) {
+            int assigneeId = issueBean.getAssigneeId();
+            if(map.containsKey(assigneeId)) {
+                map.put(assigneeId, new BigDecimal(map.get(assigneeId).toString()).add(new BigDecimal(1)));
+            } else {
+                map.put(assigneeId, new BigDecimal(1));
+            }
+        }
+
+        //计算百分比，并返回String
+        List list = new ArrayList();
+        for (int key : map.keySet()) {
+            List infoList = new ArrayList();
+            infoList.add("\"" + userInfoMap.get(key) + "\"");
+            //除法并保留2位消数，四舍五入
+            infoList.add(map.get(key).divide(new BigDecimal(issueCount), 2, RoundingMode.HALF_UP).multiply(new BigDecimal(100)));
+            list.add(infoList);
+        }
+        return list.toString();
     }
 
 }

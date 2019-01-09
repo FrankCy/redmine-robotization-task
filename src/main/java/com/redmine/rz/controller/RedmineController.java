@@ -109,32 +109,30 @@ public class RedmineController {
         return modelAndView;
     }
 
+    /**
+     * @description：任务创建情况
+     * @version 1.0
+     * @author: Yang.Chang
+     * @email: cy880708@163.com
+     * @date: 2019/1/9 上午10:35
+     * @mofified By:
+     */
     @RequestMapping(value = "/getRedmineIssueJson")
     @ResponseBody
     public String getRedmineIssueJson() throws Exception {
+        String proName = "bdjr-pzh";
+        String issueInfo = redmineService.getRedmineIssueJson(proName);
+        logger.info("任务图：" + issueInfo);
+        return issueInfo;
+    }
 
-        //定义起始日期
-        Date d1 = new SimpleDateFormat("yyyyMMdd").parse("20150101");
-        //定义结束日期
-        Date d2 = new SimpleDateFormat("yyyyMMdd").parse("20191231");
-        //定义日期实例
-        Calendar dd = Calendar.getInstance();
-        //设置日期起始时间
-        dd.setTime(d1);
-        //判断是否到结束日期
-        int i=2000;
-        List listTwo = new ArrayList();
-        while(dd.getTime().before(d2)){
-            i = i-1;
-            DateTime dateTime = new DateTime(dd.getTime());
-            //进行当前日期月份加1
-            dd.add(Calendar.DAY_OF_MONTH, 1);
-            List listOne = new ArrayList();
-            listOne.add(dateTime.getTime());
-            listOne.add(i);
-            listTwo.add(listOne);
-        }
-        return listTwo.toString();
+    @RequestMapping(value = "/getIssueProportion")
+    @ResponseBody
+    public String getIssueProportion() throws Exception {
+        String proName = "bdjr-pzh";
+        String issueInfo = redmineService.getIssueProportion(proName);
+        logger.info("饼状图：" + issueInfo);
+        return issueInfo;
     }
 
 }

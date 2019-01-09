@@ -83,9 +83,8 @@
 
         <script type="text/javascript">
             var chart = null;
-
-            $.getJSON('/redmine/getRedmineIssueJson', function (data) {
-                chart = Highcharts.chart('container1',{
+            $.getJSON('/redmine/getIssueProportion', function (data) {
+                chart = Highcharts.chart('container1', {
                     title: {
                         text: '百达金融（任务占比）'
                     },
@@ -109,17 +108,11 @@
                     series: [{
                         type: 'pie',
                         name: '任务完成占比',
-                        data: [
-                            ['郝亚强',   45.0],
-                            ['郭佩鹏',       26.8],
-                            ['王凯',       12.8],
-                            ['耿宇航',    8.5],
-                            ['桑小龙',     6.2],
-                            ['其他',   0.7]
-                        ]
+                        data: data
                     }]
                 });
             });
+
 
             $.getJSON('/redmine/getRedmineIssueJson', function (data) {
                 chart = Highcharts.chart('container2', {
@@ -127,7 +120,7 @@
                         zoomType: 'x'
                     },
                     title: {
-                        text: '燃尽图'
+                        text: '任务创建情况'
                     },
                     subtitle: {
                         text: document.ontouchstart === undefined ?
@@ -185,11 +178,12 @@
                     },
                     series: [{
                         type: 'area',
-                        name: '剩余任务',
+                        name: '创建任务',
                         data: data
                     }]
                 });
             });
+            Highcharts.setOptions({ global: { useUTC: false } });
         </script>
     </body>
 </@html>

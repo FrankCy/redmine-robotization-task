@@ -45,6 +45,11 @@ public class IssueBean {
     private String description;
 
     /**
+     * 任务开始时间
+     */
+    private Date startDate;
+
+    /**
      * 到期日期
      */
     private Date dueDate;
@@ -107,6 +112,14 @@ public class IssueBean {
         this.description = description;
     }
 
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
     public Date getDueDate() {
         return dueDate;
     }
@@ -140,6 +153,7 @@ public class IssueBean {
                 ", authorId=" + authorId +
                 ", assigneeId=" + assigneeId +
                 ", description='" + description + '\'' +
+                ", startDate=" + startDate +
                 ", dueDate=" + dueDate +
                 ", estimatedHours=" + estimatedHours +
                 ", spentHours=" + spentHours +
