@@ -10,10 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @version 1.0
@@ -169,9 +166,9 @@ public class RedmineIssueManager {
         if(issues != null && issues.size() > 0) {
             for (Issue issue : issues) {
                 IssueBean issueBean = new IssueBean();
-                issueBean.setStartDate(issue.getStartDate());
-                issueBean.setAssigneeId(issue.getAssigneeId());
-                issueBean.setDueDate(issue.getDueDate());
+                issueBean.setStartDate(issue.getStartDate() == null ? new Date() : issue.getStartDate());
+                issueBean.setAssigneeId(issue.getAssigneeId() == null ? 999 : issue.getAssigneeId());
+                issueBean.setDueDate(issue.getDueDate() == null ? new Date() : issue.getDueDate());
                 issueBeans.add(issueBean);
             }
         }
@@ -414,10 +411,10 @@ public class RedmineIssueManager {
 
         for(Project project : projects) {
             ProjectBean projectBean = new ProjectBean();
-            projectBean.setProId(project.getId());
-            projectBean.setProName(project.getName());
-            projectBean.setIdentifier(project.getIdentifier());
-            projectBean.setDescription(project.getDescription());
+            projectBean.setProId(project.getId() == null ? 9999 : project.getId());
+            projectBean.setProName(project.getName() == null ? "项目名称有误" : project.getName());
+            projectBean.setIdentifier(project.getIdentifier() == null ? "无" : project.getIdentifier());
+            projectBean.setDescription(project.getDescription() == null ? "无" : project.getDescription());
             projectBeans.add(projectBean);
         }
 
