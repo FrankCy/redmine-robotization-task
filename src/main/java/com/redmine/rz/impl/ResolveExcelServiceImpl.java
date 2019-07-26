@@ -66,48 +66,48 @@ public class ResolveExcelServiceImpl implements ResolveExcelService {
             logger.info(originalFilename);
             throw new Exception("格式错误");
         } else {
-            //获取所有的工作表的的数量
+            // 获取所有的工作表的的数量
             int numOfSheet = workbook.getNumberOfSheets();
-            //遍历这个这些表
+            // 遍历这个这些表
             for (int i = 0; i < numOfSheet; i++) {
-                //获取一个sheet也就是一个工作簿
+                // 获取一个sheet也就是一个工作簿
                 Sheet sheet = workbook.getSheetAt(i);
                 int lastRowNum = sheet.getLastRowNum();
-                //从第一行开始第一行一般是标题
+                // 从第一行开始第一行一般是标题
                 for (int j = 1; j <= lastRowNum; j++) {
                     Row row = sheet.getRow(j);
                     IssueBean issueBean = new IssueBean();
-                    //标题
+                    // 标题
                     if (row.getCell(0) != null) {
                         row.getCell(0).setCellType(Cell.CELL_TYPE_STRING);
                         String title = row.getCell(0).getStringCellValue();
                         issueBean.setTitle(title);
                     }
-                    //描述
+                    // 描述
                     if (row.getCell(1) != null) {
                         row.getCell(1).setCellType(Cell.CELL_TYPE_STRING);
                         String description = row.getCell(1).getStringCellValue();
                         issueBean.setDescription(description);
                     }
-                    //指派给谁
+                    // 预计完成时间
                     if (row.getCell(2) != null) {
                         row.getCell(2).setCellType(Cell.CELL_TYPE_NUMERIC);
                         Double assigneeId = row.getCell(2).getNumericCellValue();
                         issueBean.setAssigneeId(assigneeId.intValue());
                     }
-                    //截止时间
+                    // 截止时间
                     if (row.getCell(3) != null) {
                         row.getCell(3).setCellType(Cell.CELL_TYPE_STRING);
                         String dueDateString = row.getCell(3).getStringCellValue();
                         issueBean.setDueDate(BdjrDateUtil.stringDateToDate(dueDateString));
                     }
-                    //预估完成时间（小时）
+                    // 预估完成时间（小时）
                     if (row.getCell(4) != null) {
                         row.getCell(4).setCellType(Cell.CELL_TYPE_STRING);
                         String estimatedHours = row.getCell(4).getStringCellValue();
                         issueBean.setEstimatedHours(Float.valueOf(estimatedHours));
                     }
-                    //所属项目
+                    // 所属项目
                     if (row.getCell(5) != null) {
                         row.getCell(5).setCellType(Cell.CELL_TYPE_NUMERIC);
                         Double proId = row.getCell(5).getNumericCellValue();
