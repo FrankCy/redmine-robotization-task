@@ -70,9 +70,9 @@ maven构建后会在系统根目录target下生成应用jar包，使用此jar包
 任务状态| http://redmine-home:3000/issue_statuses.xml
 
 ### 项目博客 ###
-[CSDN-Java for Redmine](https://frankyoung.blog.csdn.net/article/details/85787483)
-[CSDN-Jenkins + JMeter + Redmine 完成DevOps](https://frankyoung.blog.csdn.net/article/details/85236349)
-[CSDN-Java Redmine Rest API](https://frankyoung.blog.csdn.net/article/details/85100850)
+- [CSDN-Java for Redmine](https://frankyoung.blog.csdn.net/article/details/85787483)
+- [CSDN-Jenkins + JMeter + Redmine 完成DevOps](https://frankyoung.blog.csdn.net/article/details/85236349)
+- [CSDN-Java Redmine Rest API](https://frankyoung.blog.csdn.net/article/details/85100850)
 ### 扩展【JMeter自动化测试发布Remine BUG】
-[CSDN-JMeter 调用自定义Java程序创建Redmine问题](https://frankyoung.blog.csdn.net/article/details/85233143)
-[CSDN-JMeter 调用自定义Java程序创建Redmine问题（II）](https://frankyoung.blog.csdn.net/article/details/85236294)
+- [CSDN-JMeter 调用自定义Java程序创建Redmine问题](https://frankyoung.blog.csdn.net/article/details/85233143)
+- [CSDN-JMeter 调用自定义Java程序创建Redmine问题（II）](https://frankyoung.blog.csdn.net/article/details/85236294)
